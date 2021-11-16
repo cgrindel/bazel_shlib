@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
-# Outputs a message to stderr and exits
+# Outputs a message to stderr and exits.
+#
+# Flags:
+#   --exit_code: Used to specify the exit code to return/exit.
+#   --no_exit: If specified, the function will `return` the exit code instead of calling `exit`.
+# 
+# Args:
+#   *: All of the collected args are combined to create an error message. If no values are
+#      specified, then a default error message is used.
+#
+# Outputs:
+#   stdout: None.
+#   stderr: The error message
 exit_with_msg() {
-  # local err_msg="${1:-}"
-  # local exit_code=${2:-1}
-  # local exit_or_return="${3:-exit}"
   local exit_code=1
   local no_exit=0
 

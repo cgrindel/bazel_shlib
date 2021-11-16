@@ -40,3 +40,8 @@ exit_code=$?
 assert_equal "My custom message" "${msg}"
 assert_equal 123 ${exit_code}
 
+msg=$(exit_with_msg --no_exit "First msg" "Second msg" 2>&1)
+exit_code=$?
+assert_equal "First msg Second msg" "${msg}"
+assert_equal 1 ${exit_code}
+
