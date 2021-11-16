@@ -15,7 +15,7 @@ Add the following to your `WORKSPACE` file.
 ```python
 # TODO: Add http_archive command after release.
 
-load("//:deps.bzl", "shlib_rules_dependencies")
+load("@cgrindel_bazel_shlib//:deps.bzl", "shlib_rules_dependencies")
 
 shlib_rules_dependencies()
 
