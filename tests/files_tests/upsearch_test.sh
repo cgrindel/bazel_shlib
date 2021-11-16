@@ -19,6 +19,39 @@ if [[ $(type -t files_lib_loaded) != function ]]; then
   source "${files_lib}"
 fi
 
-# DEBUG BEGIN
-fail "STOP"
-# DEBUG END
+# MARK - Setup
+
+starting_dir="${PWD}"
+
+# Create a subdirectory
+subdir="path/to/search/from"
+mkdir -p "${subdir}"
+
+# Create a file to find
+target_file="file_to_find"
+touch "${target_file}"
+
+# MARK - Tests
+
+# Find a file, using the --start_dir flag
+actual=$(upsearch --start_dir "${subdir}" "${target_file}")
+assert_equal "$starting_dir/${target_file}" "${actual}"
+
+# Do not find a file, no error
+actual=$(upsearch "file_does_not_exist")
+assert_equal "" "${actual}"
+
+# Do not find a file, error
+set +e
+actual=$(upsearch --error_if_not_found "file_does_not_exist")
+exit_code=$?
+assert_equal "" "${actual}"
+assert_equal 1 ${exit_code}
+set -e
+
+# Switch to the subdir
+cd "${subdir}"
+
+# Find a file starting from current directory
+actual=$(upsearch "${target_file}")
+assert_equal "$starting_dir/${target_file}" "${actual}"

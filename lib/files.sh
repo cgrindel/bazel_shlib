@@ -17,18 +17,19 @@ if [[ $(type -t paths_lib_loaded) != function ]]; then
 fi
 
 # This is used to determine if the library has been loaded
-files_lib_loaded() {
-  return 0
-}
+files_lib_loaded() { return; }
 
 # Recursively searches for a file starting from the current directory up to the root of the filesystem.
 #
 # Flags:
+#  --start_dir: The directory where to start the search.
+#  --error_if_not_found: If specified, the function will return 1 if the file is not found.
 # 
 # Args:
+#  target_file: The basename for the file to be found.
 #
 # Outputs:
-#   stdout: None.
+#   stdout: The fully-qualified path to the 
 #   stderr: None.
 upsearch() {
   # Lovingly inspired by https://unix.stackexchange.com/a/13474.
@@ -39,8 +40,12 @@ upsearch() {
   while (("$#")); do
     case "${1}" in
       "--start_dir")
-        local start_dir="${2}"
+        local start_dir="$(normalize_path "${2}")"
         shift 2
+        ;;
+      "--error_if_not_found")
+        local error_if_not_found=1
+        shift 1
         ;;
       *)
         args+=( "${1}" )
