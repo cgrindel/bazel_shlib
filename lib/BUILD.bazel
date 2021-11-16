@@ -1,0 +1,8 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_library(
+    name = "messages",
+    srcs = ["messages.sh"],
+)
