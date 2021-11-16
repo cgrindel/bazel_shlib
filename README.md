@@ -40,7 +40,7 @@ updatesrc_rules_dependencies()
 
 Add the desired library and the Bazel runfiles as a dependency to your shell binary, library, or
 test declaration. In this example, the
-[sh_binary](https://docs.bazel.build/versions/main/be/shell.html#sh_binary) has a dependeny on the
+[sh_binary](https://docs.bazel.build/versions/main/be/shell.html#sh_binary) has a dependency on the
 `paths.sh` library.
 
 ```python
