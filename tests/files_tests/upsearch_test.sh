@@ -14,10 +14,8 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_lib="$(rlocation cgrindel_bazel_shlib/lib/assertions.sh)"
 source "${assertions_lib}"
 
-if [[ $(type -t files_lib_loaded) != function ]]; then
-  files_lib="$(rlocation cgrindel_bazel_shlib/lib/files.sh)"
-  source "${files_lib}"
-fi
+files_lib="$(rlocation cgrindel_bazel_shlib/lib/files.sh)"
+source "${files_lib}"
 
 # MARK - Setup
 

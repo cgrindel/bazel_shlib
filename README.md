@@ -56,18 +56,26 @@ sh_binary(
 
 ### Source The Library And Use It
 
-In your shell script, add the following to load the library. This code will check if the library is
-already loaded. It not it will source the library file.
+In your shell script, add the following to source the library. 
 
 ```sh
-# Load the library file, it it is not already loaded.
-if [[ $(type -t paths_lib_loaded) != function ]]; then
-  paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
-  source "${paths_lib}"
-fi
+# Load the library file
+paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
+source "${paths_lib}"
 
 # ...
 
 # Use the library functions
 foo_path="$(normalize_path "${foo_path}")"
+```
+
+If you want to avoid sourcing a library that has already been loaded, the following code will check
+if the library is already loaded.
+
+```sh
+# Load the library file, it it is not already loaded.
+if [[ $(type -t cgrindel_bazel_shlib_lib_paths_loaded) != function ]]; then
+  paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
+  source "${paths_lib}"
+fi
 ```

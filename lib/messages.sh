@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# This is used to determine if the library has been loaded
+cgrindel_bazel_shlib_lib_messages_loaded() { return; }
+
 # Outputs a message to stderr and exits.
 #
 # Flags:

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This is used to determine if the library has been loaded
-arrays_lib_loaded() { return; }
+cgrindel_bazel_shlib_lib_arrays_loaded() { return; }
 
 # Sorts the arguments and outputs a unique and sorted list with each item on its own line.
 #

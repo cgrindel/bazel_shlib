@@ -11,13 +11,13 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-if [[ $(type -t paths_lib_loaded) != function ]]; then
+if [[ $(type -t cgrindel_bazel_shlib_lib_paths_loaded) != function ]]; then
   paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
   source "${paths_lib}"
 fi
 
 # This is used to determine if the library has been loaded
-files_lib_loaded() { return; }
+cgrindel_bazel_shlib_lib_files_loaded() { return; }
 
 # Recursively searches for a file starting from the current directory up to the root of the filesystem.
 #
