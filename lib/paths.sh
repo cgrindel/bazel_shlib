@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# This is used to determine if the library has been loaded
+paths_lib_loaded() {
+  return 0
+}
+
 # Normalizes the path echoing the fully-qualified path.
 #
 # Args:

@@ -19,3 +19,11 @@ sh_library(
     name = "paths",
     srcs = ["paths.sh"],
 )
+
+sh_library(
+    name = "files",
+    srcs = ["files.sh"],
+    deps = [
+        ":paths",
+    ],
+)
