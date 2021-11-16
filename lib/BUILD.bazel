@@ -1,8 +1,16 @@
 load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
 
+package(default_visibility = ["//visibility:public"])
+
 bzlformat_pkg(name = "bzlformat")
 
 sh_library(
     name = "messages",
     srcs = ["messages.sh"],
+)
+
+sh_library(
+    name = "assertions",
+    testonly = True,
+    srcs = ["assertions.sh"],
 )
