@@ -27,3 +27,8 @@ sh_library(
         ":paths",
     ],
 )
+
+sh_library(
+    name = "arrays",
+    srcs = ["arrays.sh"],
+)

@@ -1,0 +1,23 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_test(
+    name = "sort_items",
+    srcs = ["sort_items_test.sh"],
+    deps = [
+        "//lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
+
+sh_test(
+    name = "print_by_line_test",
+    srcs = ["print_by_line_test.sh"],
+    deps = [
+        "//lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
