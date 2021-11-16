@@ -21,3 +21,13 @@ sh_test(
         "@cgrindel_bazel_shlib//lib:assertions",
     ],
 )
+
+sh_test(
+    name = "join_by_test",
+    srcs = ["join_by_test.sh"],
+    deps = [
+        "//lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
