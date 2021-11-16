@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# Normalizes the path echoing the fully-qualified path.
+#
+# Args:
+#  path: The path string to normalize.
+#
+# Outputs:
+#   stdout: The fully-qualified path.
+#   stderr: None.
 normalize_path() {
   local path="${1}"
   if [[ -d "${path}" ]]; then
