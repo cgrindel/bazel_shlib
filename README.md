@@ -59,6 +59,17 @@ sh_binary(
 In your shell script, add the following to source the library. 
 
 ```sh
+# --- begin runfiles.bash initialization v2 ---
+# Copy-pasted from the Bazel Bash runfiles library v2.
+set -uo pipefail; f=bazel_tools/tools/bash/runfiles/runfiles.bash
+source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
+  source "$(grep -sm1 "^$f " "${RUNFILES_MANIFEST_FILE:-/dev/null}" | cut -f2- -d' ')" 2>/dev/null || \
+  source ".runfiles/$f" 2>/dev/null || \
+  source "$(grep -sm1 "^$f " ".runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
+  source "$(grep -sm1 "^$f " ".exe.runfiles_manifest" | cut -f2- -d' ')" 2>/dev/null || \
+  { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
+# --- end runfiles.bash initialization v2 ---
+
 # Load the library file
 paths_lib="$(rlocation cgrindel_bazel_shlib/lib/paths.sh)"
 source "${paths_lib}"
