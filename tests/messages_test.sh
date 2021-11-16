@@ -17,25 +17,26 @@ source "${assertions_lib}"
 messages_lib="$(rlocation cgrindel_bazel_shlib/lib/messages.sh)"
 source "${messages_lib}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK START" 
-# DEBUG END
-
 # Disable errexit so that we can capture the exit codes
 set +e
 
-# msg=$(exit_with_msg --no_exit "My custom message"  2>&1 || exit_code=$?)
-# msg=$(exit_with_msg --no_exit "My custom message"  2>&1 || echo >&2 "Exit Code: $?")
+msg=$(exit_with_msg --no_exit 2>&1)
+exit_code=$?
+assert_equal "Unspecified error occurred." "${msg}"
+assert_equal 1 ${exit_code}
+
 msg=$(exit_with_msg --no_exit "My custom message"  2>&1)
 exit_code=$?
 assert_equal "My custom message" "${msg}"
 assert_equal 1 ${exit_code}
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  msg: ${msg}" 
-echo >&2 "*** CHUCK  exit_code: ${exit_code}" 
-# DEBUG END
+msg=$(exit_with_msg --no_exit --exit_code 123 2>&1)
+exit_code=$?
+assert_equal "Unspecified error occurred." "${msg}"
+assert_equal 123 ${exit_code}
 
-# # DEBUG BEGIN
-# fail "STOP"
-# # DEBUG END
+msg=$(exit_with_msg --no_exit --exit_code 123 "My custom message"  2>&1)
+exit_code=$?
+assert_equal "My custom message" "${msg}"
+assert_equal 123 ${exit_code}
+
