@@ -75,9 +75,6 @@ contains_item_sorted() {
   shift
 
   local items_count=${#}
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK  items_count: ${items_count}" 
-  # DEBUG END
   [[ ${items_count} == 0 ]] && return -1
 
   if [[ ${items_count} == 1 ]]; then
@@ -88,22 +85,11 @@ contains_item_sorted() {
   local half=$(( ${items_count}/2 ))
   local mid_idx=$(( ${half} + 1))
   local mid="${!mid_idx}"
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK  half: ${half}" 
-  echo >&2 "*** CHUCK  mid_idx: ${mid_idx}" 
-  echo >&2 "*** CHUCK  mid: ${mid}" 
-  # DEBUG END
   [[  "${expected}" == "${mid}" ]] && return 
 
   if [[ "${expected}" < "${mid}" ]]; then
-    # DEBUG BEGIN
-    echo >&2 "*** CHUCK LESS THAN" 
-    # DEBUG END
     local subarray=( "${@:1:$half}" )
   else
-    # DEBUG BEGIN
-    echo >&2 "*** CHUCK GREATER THAN" 
-    # DEBUG END
     local subarray=( "${@:$mid_idx}" )
   fi
   contains_item_sorted "${expected}" "${subarray[@]}"
