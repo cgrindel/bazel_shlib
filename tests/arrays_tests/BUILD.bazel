@@ -31,3 +31,13 @@ sh_test(
         "@cgrindel_bazel_shlib//lib:assertions",
     ],
 )
+
+sh_test(
+    name = "contains_item_test",
+    srcs = ["contains_item_test.sh"],
+    deps = [
+        "//lib:arrays",
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)

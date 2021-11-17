@@ -46,3 +46,18 @@ join_by() {
   echo "$*"
 }
 
+
+contains_item() {
+  local expected="${1}"
+  shift
+  # Do a quick regex to see if the value is in the rest of the args
+  # If not, then don't bother looping
+  [[ ! "${*}" =~ "${expected}" ]] && return -1
+  # Loop through items for a precise match
+  for item in "${@}" ; do
+    [[ "${item}" == "${expected}" ]] && return 0
+  done
+  # We did not find the item
+  return -1
+}
+
