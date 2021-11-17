@@ -13,7 +13,12 @@ repository.
 Add the following to your `WORKSPACE` file.
 
 ```python
-# TODO: Add http_archive command after release.
+http_archive(
+    name = "cgrindel_bazel_shlib",
+    sha256 = "0f34e490950338894851c1427c9a2b783bcb699fcee8185b4d7c07e253923f67",
+    strip_prefix = "bazel_shlib-0.1.0",
+    urls = ["https://github.com/cgrindel/bazel_shlib/archive/v0.1.0.tar.gz"],
+)
 
 load("@cgrindel_bazel_shlib//:deps.bzl", "shlib_rules_dependencies")
 
