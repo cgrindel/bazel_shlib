@@ -46,7 +46,16 @@ join_by() {
   echo "$*"
 }
 
-
+# Succeeds if the first argument is one of the follow-on arguments. Otherwise fails.
+#
+# Args:
+#   expected: The first argument is the expected value.
+#   *: The follow on arguments are the list values being checked. They can be in any order.
+#
+# Outputs:
+#   stdout: None.
+#   stderr: None.
+#   Returns 0 if the expected value is found. Otherwise returns -1.
 contains_item() {
   local expected="${1}"
   shift
@@ -60,4 +69,3 @@ contains_item() {
   # We did not find the item
   return -1
 }
-
