@@ -17,7 +17,64 @@ source "${assertions_lib}"
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
+# DEBUG BEGIN
+echo >&2 "*** CHUCK START" 
+# DEBUG END
+
+# MARK - Even Numbered Array
+
+array=(aa ab ac ba bb bc)
+
+for item in "${array[@]}" ; do
+  contains_item_sorted "${item}" "${array[@]}" || fail "Expected '${item}' to be found."
+done
 
 # DEBUG BEGIN
-fail "STOP"
+echo >&2 "*** CHUCK FOO" 
 # DEBUG END
+
+# contains_item_sorted "za" "${array[@]}" && fail "Expected 'za' not to be found"
+(contains_item_sorted "za" "${array[@]}" && fail "Expected 'za' not to be found") || [[ 0 == 0 ]]
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK END EVEN" 
+# DEBUG END
+
+# MARK - Odd Numbered Array
+
+array=(aa ab ac ba bb)
+
+for item in "${array[@]}" ; do
+  contains_item_sorted "${item}" "${array[@]}" || fail "Expected '${item}' to be found."
+done
+
+contains_item_sorted "zb" "${array[@]}" && fail "Expected 'zb' not to be found"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK END ODD" 
+# DEBUG END
+
+# MARK - One Item Array
+
+array=(aa)
+
+for item in "${array[@]}" ; do
+  contains_item_sorted "${item}" "${array[@]}" || fail "Expected '${item}' to be found."
+done
+
+contains_item_sorted "zc" "${array[@]}" && fail "Expected 'zc' not to be found"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK END ONE" 
+# DEBUG END
+
+# MARK - Empty Array
+
+contains_item_sorted "aa" && fail "Expected 'aa' not to be found in empty array"
+
+# DEBUG BEGIN
+echo >&2 "*** CHUCK END EMPTY" 
+# DEBUG END
+
+# Made it to the end successfully
+exit 0
