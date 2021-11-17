@@ -69,3 +69,12 @@ contains_item() {
   # We did not find the item
   return -1
 }
+
+contains_item_sorted() {
+  local expected="${1}"
+  shift
+  local items_count=${#}
+  # DEBUG BEGIN
+  echo >&2 "*** CHUCK  items_count: ${items_count}" 
+  # DEBUG END
+}
