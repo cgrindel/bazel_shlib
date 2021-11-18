@@ -56,49 +56,76 @@ contains_item_sorted "aa" && fail "Expected 'aa' not to be found in empty array"
 
 # MARK - Performance Tests
 
-iterations=1000
-array=(a b c d e f g h i j k l m n o p q r s t u v w x y z)
+# test_iterations=1000
+test_iterations=100
+letters=(a b c d e f g h i j k l m n o p q r s t u v w x y z)
+
+create_array() {
+  local item_count=${1}
+  local max_val=$(( ${item_count} - 1 ))
+  local width=$(( ${#max_val} ))
+  local output=()
+  local val=0
+  for (( ; val < item_count; val++ )); do
+    output+=( "$(printf "%0${width}d" $val)" )
+  done
+  print_by_line "${output[@]}"
+}
 
 do_contains_item_perf_test() {
-  for (( i = 0; i < $iterations; i++ )); do
-    for item in "${array[@]}" ; do
-      contains_item "${item}" "${array[@]}"
+  for (( i = 0; i < $test_iterations; i++ )); do
+    for item in "${@}" ; do
+      contains_item "${item}" "${@}"
     done
   done
 }
 
 do_contains_item_sorted_perf_test() {
-  for (( i = 0; i < $iterations; i++ )); do
-    for item in "${array[@]}" ; do
-      contains_item_sorted "${item}" "${array[@]}"
+  for (( i = 0; i < $test_iterations; i++ )); do
+    for item in "${@}" ; do
+      contains_item_sorted "${item}" "${@}"
     done
   done
 }
 
-# contains_item_time=$(time 2>&1  for (( i = 0; i < $iterations; i++ )); do do_contains_item_perf_test;  done)
-# contains_item_sorted_time=$(time 2>&1 for (( i = 0; i < $iterations; i++ )); do do_contains_item_sorted_perf_test;  done)
-# contains_item_time="$(time do_contains_item_perf_test 2>&1)"
-# contains_item_sorted_time="$(time 2>&1 do_contains_item_sorted_perf_test 2>&1)"
-contains_item_time="$( (time do_contains_item_perf_test) 2>&1 )"
-contains_item_sorted_time="$( (time do_contains_item_sorted_perf_test) 2>&1 )"
+do_contains_item_smart_perf_test() {
+  for (( i = 0; i < $test_iterations; i++ )); do
+    for item in "${@}" ; do
+      contains_item_smart "${item}" "${@}"
+    done
+  done
+}
 
-echo >&2 "*** CHUCK  contains_item_time: ${contains_item_time}" 
-echo >&2 "*** CHUCK  contains_item_sorted_time: ${contains_item_sorted_time}" 
+# contains_item_time="$( (time do_contains_item_perf_test) 2>&1 )"
+# contains_item_sorted_time="$( (time do_contains_item_sorted_perf_test) 2>&1 )"
+
+# array_sizes=(10 100 1000 10000)
+# array_sizes=(10 25 50 75 100)
+array_sizes=(25 30 35 40 45 50)
+for size in "${array_sizes[@]}" ; do
+  echo >&2 "*** CHUCK  size: ${size}" 
+  array=( $(create_array ${size}) )
+  contains_item_time="$( (time do_contains_item_perf_test "${array[@]}") 2>&1 )"
+  contains_item_sorted_time="$( (time do_contains_item_sorted_perf_test "${array[@]}") 2>&1 )"
+  echo >&2 "*** CHUCK  contains_item_time: ${contains_item_time}" 
+  echo >&2 "*** CHUCK  contains_item_sorted_time: ${contains_item_sorted_time}" 
+done
+
 
 # DEBUG BEGIN
 
 # echo >&2 "*** CHUCK contains_item a" 
-# time for (( i = 0; i < $iterations; i++ )); do contains_item "a" "${array[@]}";  done
+# time for (( i = 0; i < $test_iterations; i++ )); do contains_item "a" "${array[@]}";  done
 
 # echo >&2 "*** CHUCK contains_item_sorted a" 
-# time for (( i = 0; i < $iterations; i++ )); do contains_item_sorted "a" "${array[@]}";  done
+# time for (( i = 0; i < $test_iterations; i++ )); do contains_item_sorted "a" "${array[@]}";  done
 
 
 # echo >&2 "*** CHUCK contains_item z" 
-# time for (( i = 0; i < ${iterations}; i++ )); do contains_item "z" "${array[@]}";  done
+# time for (( i = 0; i < ${test_iterations}; i++ )); do contains_item "z" "${array[@]}";  done
 
 # echo >&2 "*** CHUCK contains_item_sorted z" 
-# time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted "z" "${array[@]}";  done
+# time for (( i = 0; i < ${test_iterations}; i++ )); do contains_item_sorted "z" "${array[@]}";  done
 
 
 fail "STOP"
