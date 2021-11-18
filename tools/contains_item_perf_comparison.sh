@@ -11,54 +11,12 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-assertions_lib="$(rlocation cgrindel_bazel_shlib/lib/assertions.sh)"
-source "${assertions_lib}"
-
 arrays_lib="$(rlocation cgrindel_bazel_shlib/lib/arrays.sh)"
 source "${arrays_lib}"
 
-
-# MARK - Even Numbered Array
-
-array=(aa ab ac ba bb bc)
-
-for item in "${array[@]}" ; do
-  contains_item_sorted "${item}" "${array[@]}" || fail "Expected '${item}' to be found."
-done
-
-contains_item_sorted "za" "${array[@]}" && fail "Expected 'za' not to be found"
-
-# MARK - Odd Numbered Array
-
-array=(aa ab ac ba bb)
-
-for item in "${array[@]}" ; do
-  contains_item_sorted "${item}" "${array[@]}" || fail "Expected '${item}' to be found."
-done
-
-contains_item_sorted "zb" "${array[@]}" && fail "Expected 'zb' not to be found"
-
-
-# MARK - One Item Array
-
-array=(aa)
-
-for item in "${array[@]}" ; do
-  contains_item_sorted "${item}" "${array[@]}" || fail "Expected '${item}' to be found."
-done
-
-contains_item_sorted "zc" "${array[@]}" && fail "Expected 'zc' not to be found"
-
-
-# MARK - Empty Array
-
-contains_item_sorted "aa" && fail "Expected 'aa' not to be found in empty array"
-
 # MARK - Performance Tests
 
-# test_iterations=1000
-test_iterations=100
-letters=(a b c d e f g h i j k l m n o p q r s t u v w x y z)
+test_iterations=${1:-100}
 
 create_array() {
   local item_count=${1}
@@ -88,28 +46,16 @@ do_contains_item_sorted_perf_test() {
   done
 }
 
-do_contains_item_smart_perf_test() {
-  for (( i = 0; i < $test_iterations; i++ )); do
-    for item in "${@}" ; do
-      contains_item_smart "${item}" "${@}"
-    done
-  done
-}
+echo "Test iterations: ${test_iterations}"
+echo ""
 
-# contains_item_time="$( (time do_contains_item_perf_test) 2>&1 )"
-# contains_item_sorted_time="$( (time do_contains_item_sorted_perf_test) 2>&1 )"
-
-# array_sizes=(10 100 1000 10000)
-# array_sizes=(10 25 50 75 100)
 array_sizes=(25 30 35 40 45 50)
 for size in "${array_sizes[@]}" ; do
-  echo >&2 "*** CHUCK  size: ${size}" 
+  echo "array size: ${size}" 
   array=( $(create_array ${size}) )
   contains_item_time="$( (time do_contains_item_perf_test "${array[@]}") 2>&1 )"
   contains_item_sorted_time="$( (time do_contains_item_sorted_perf_test "${array[@]}") 2>&1 )"
-  echo >&2 "*** CHUCK  contains_item_time: ${contains_item_time}" 
-  echo >&2 "*** CHUCK  contains_item_sorted_time: ${contains_item_sorted_time}" 
+  echo "contains_item: ${contains_item_time}" 
+  echo "contains_item_sorted: ${contains_item_sorted_time}" 
+  echo ""
 done
-
-# Made it to the end successfully
-exit 0

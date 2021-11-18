@@ -46,7 +46,8 @@ join_by() {
   echo "$*"
 }
 
-# Searches for the expected value in the follow-on arguments. 
+# Searches for the expected value in the follow-on arguments. If your list is sorted and has
+# more than ~40 items, consider using 'contains_item_sorted'.
 #
 # Args:
 #   expected: The first argument is the expected value.
@@ -79,7 +80,7 @@ contains_item() {
 }
 
 # Searches for the expected value in the follow-on arguments. This function assumes that the list 
-# items are sorted and unique. Only use this function over contains_item if you expect to have 40 
+# items are sorted and unique. Only use this function over 'contains_item' if you expect to have 40 
 # or more items in your list.
 #
 # Args:
