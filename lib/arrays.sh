@@ -81,7 +81,8 @@ contains_item() {
 
 # Searches for the expected value in the follow-on arguments. This function assumes that the list 
 # items are sorted and unique. Only use this function over 'contains_item' if you expect to have 40 
-# or more items in your list.
+# or more items in your list. Check out //tools:contains_item_perf_comparison to run some comparisons
+# between this function and contains_item.
 #
 # Args:
 #   expected: The first argument is the expected value.
