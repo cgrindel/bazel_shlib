@@ -70,36 +70,48 @@ array=(a b c d e f g h i j k l m n o p q r s t u v w x y z)
 # set -x
 # contains_item "z" "${array[@]}"
 
-
 echo >&2 "*** CHUCK contains_item a" 
 time for (( i = 0; i < $iterations; i++ )); do contains_item "a" "${array[@]}";  done
-
-echo >&2 "*** CHUCK contains_item_a a" 
-time for (( i = 0; i < $iterations; i++ )); do contains_item_a "a" "${array[@]}";  done
 
 echo >&2 "*** CHUCK contains_item_sorted a" 
 time for (( i = 0; i < $iterations; i++ )); do contains_item_sorted "a" "${array[@]}";  done
 
+
 echo >&2 "*** CHUCK contains_item z" 
 time for (( i = 0; i < ${iterations}; i++ )); do contains_item "z" "${array[@]}";  done
-
-echo >&2 "*** CHUCK contains_item_a z" 
-time for (( i = 0; i < $iterations; i++ )); do contains_item_a "z" "${array[@]}";  done
 
 echo >&2 "*** CHUCK contains_item_sorted z" 
 time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted "z" "${array[@]}";  done
 
-echo >&2 "*** CHUCK contains_item_sorted_a z" 
-time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_a "z" "${array[@]}";  done
+# echo >&2 "*** CHUCK contains_item a" 
+# time for (( i = 0; i < $iterations; i++ )); do contains_item "a" "${array[@]}";  done
 
-echo >&2 "*** CHUCK contains_item_sorted_b z" 
-time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_b "z" "${array[@]}";  done
+# echo >&2 "*** CHUCK contains_item_a a" 
+# time for (( i = 0; i < $iterations; i++ )); do contains_item_a "a" "${array[@]}";  done
 
-echo >&2 "*** CHUCK contains_item_sorted_c z" 
-time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_c "z" "${array[@]}";  done
+# echo >&2 "*** CHUCK contains_item_sorted a" 
+# time for (( i = 0; i < $iterations; i++ )); do contains_item_sorted "a" "${array[@]}";  done
 
-echo >&2 "*** CHUCK contains_item_sorted_d z" 
-time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_d "z" "${array[@]}";  done
+# echo >&2 "*** CHUCK contains_item z" 
+# time for (( i = 0; i < ${iterations}; i++ )); do contains_item "z" "${array[@]}";  done
+
+# echo >&2 "*** CHUCK contains_item_a z" 
+# time for (( i = 0; i < $iterations; i++ )); do contains_item_a "z" "${array[@]}";  done
+
+# echo >&2 "*** CHUCK contains_item_sorted z" 
+# time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted "z" "${array[@]}";  done
+
+# echo >&2 "*** CHUCK contains_item_sorted_a z" 
+# time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_a "z" "${array[@]}";  done
+
+# echo >&2 "*** CHUCK contains_item_sorted_b z" 
+# time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_b "z" "${array[@]}";  done
+
+# echo >&2 "*** CHUCK contains_item_sorted_c z" 
+# time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_c "z" "${array[@]}";  done
+
+# echo >&2 "*** CHUCK contains_item_sorted_d z" 
+# time for (( i = 0; i < ${iterations}; i++ )); do contains_item_sorted_d "z" "${array[@]}";  done
 
 
 
