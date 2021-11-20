@@ -20,24 +20,21 @@ def _execute_binary_impl(ctx):
         content = """
 #!/usr/bin/env bash
 
-# DEBUG BEGIN
-tree
-# DEBUG END
-
 args=()
 """ + "\n".join([
             """args+=( "{arg}" )""".format(arg = arg)
             for arg in ctx.attr.args
+            # ]) + """
+            # "{binary}"
+            # """.format(binary = bin_path),
         ]) + """
-  "{binary}" 
+if [[ ${#args[@]} > 0 ]]; then
+""" + """\
+"{binary}" "${{args[@]}}"
+else
+"{binary}"
+fi
 """.format(binary = bin_path),
-        # ]) + """
-        # if [[ ${#args[@]} > 0 ]]; then
-        # "{binary}" "${args[@]}"
-        # else
-        # "{binary}"
-        # fi
-        # """.format(binary = bin_path),
     )
     runfiles = ctx.runfiles()
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
