@@ -1,0 +1,24 @@
+load("@cgrindel_rules_bzlformat//bzlformat:bzlformat.bzl", "bzlformat_pkg")
+load("//rules:execute_binary.bzl", "execute_binary")
+
+bzlformat_pkg(name = "bzlformat")
+
+sh_binary(
+    name = "my_bin",
+    srcs = ["my_bin.sh"],
+)
+
+execute_binary(
+    name = "my_bin_no_args",
+    binary = ":my_bin",
+)
+
+sh_test(
+    name = "execute_binary_no_args_test",
+    srcs = ["execute_binary_no_args_test.sh"],
+    data = [":my_bin_no_args"],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+        "@cgrindel_bazel_shlib//lib:assertions",
+    ],
+)
