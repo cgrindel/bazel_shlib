@@ -17,16 +17,13 @@ def _execute_binary_impl(ctx):
     ctx.actions.write(
         output = out,
         is_executable = True,
-        content = """
+        content = """\
 #!/usr/bin/env bash
 
 args=()
 """ + "\n".join([
             """args+=( "{arg}" )""".format(arg = arg)
             for arg in ctx.attr.args
-            # ]) + """
-            # "{binary}"
-            # """.format(binary = bin_path),
         ]) + """
 if [[ ${#args[@]} > 0 ]]; then
 """ + """\

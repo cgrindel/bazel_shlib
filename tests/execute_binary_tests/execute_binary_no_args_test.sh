@@ -16,11 +16,12 @@ source "${assertions_lib}"
 
 # DEBUG BEGIN
 echo >&2 "*** CHUCK execute_binary_no_args_test START" 
-echo >&2 "*** CHUCK  @: ${@:-}" 
-set -x
 # DEBUG END
 
-my_bin="$(rlocation cgrindel_bazel_shlib/tests/execute_binary_tests/my_bin_no_args)"
+my_bin="$(rlocation cgrindel_bazel_shlib/tests/execute_binary_tests/my_bin_no_args.sh)"
+# DEBUG BEGIN
+echo >&2 "*** CHUCK  my_bin: ${my_bin}" 
+# DEBUG END
 "${my_bin}"
 
 # output=$("${my_bin}")
