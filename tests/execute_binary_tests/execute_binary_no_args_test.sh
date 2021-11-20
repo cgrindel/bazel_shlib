@@ -14,20 +14,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 assertions_lib="$(rlocation cgrindel_bazel_shlib/lib/assertions.sh)"
 source "${assertions_lib}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK execute_binary_no_args_test START" 
-# DEBUG END
-
 my_bin="$(rlocation cgrindel_bazel_shlib/tests/execute_binary_tests/my_bin_no_args.sh)"
-# DEBUG BEGIN
-echo >&2 "*** CHUCK  my_bin: ${my_bin}" 
-# DEBUG END
-"${my_bin}"
 
-# output=$("${my_bin}")
-# Cheap and dirty assertion
-# grep "Args Count: 0"
-
-# DEBUG BEGIN
-fail "STOP"
-# DEBUG END
+output=$("${my_bin}")
+[[ "${output}" =~ "Args Count: 0" ]] || fail "Expected args count of 0."
