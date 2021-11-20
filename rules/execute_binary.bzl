@@ -7,6 +7,10 @@ def _execute_binary_impl(ctx):
         content = """\
 #!/usr/bin/env bash
 
+# Set the RUNFILES_DIR. If an embedded binary is a sh_binary, it has trouble 
+# finding the runfiles directory. So, we help.
+[[ -f "${PWD}/../MANIFEST" ]] && export RUNFILES_DIR="${PWD}/.."
+
 args=()
 """ + "\n".join([
             """args+=( "{arg}" )""".format(arg = arg)
@@ -22,6 +26,10 @@ fi
     )
     runfiles = ctx.runfiles()
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
+
+    # DEBUG BEGIN
+    print("*** CHUCK runfiles.files.to_list(): ", runfiles.files.to_list())
+    # DEBUG END
 
     return DefaultInfo(executable = out, runfiles = runfiles)
 
