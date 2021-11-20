@@ -1,7 +1,6 @@
 def _execute_binary_impl(ctx):
-    out = ctx.actions.declare_file(ctx.label.name + ".sh")
     bin_path = ctx.executable.binary.short_path
-
+    out = ctx.actions.declare_file(ctx.label.name + ".sh")
     ctx.actions.write(
         output = out,
         is_executable = True,
@@ -36,6 +35,11 @@ execute_binary = rule(
             doc = "The binary to be executed.",
         ),
     },
-    doc = "",
+    doc = """\
+This rule executes a binary target with the specified arguments. It generates
+a Bash script that contains a call to the binary with the arguments embedded
+in the script. This is useful when one wants to embed a call to a binary
+target with a set of arguments in another rule.
+""",
     executable = True,
 )
