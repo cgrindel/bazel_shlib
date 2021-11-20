@@ -11,32 +11,11 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v2 ---
 
-messages_lib="$(rlocation cgrindel_bazel_shlib/lib/messages.sh)"
-source "${messages_lib}"
+assertions_lib="$(rlocation cgrindel_bazel_shlib/lib/assertions.sh)"
+source "${assertions_lib}"
 
-# DEBUG BEGIN
-echo >&2 "*** CHUCK execute_binary.sh START" 
-echo >&2 "*** CHUCK  @: ${@:-}" 
-# DEBUG END
+my_bin="$(rlocation cgrindel_bazel_shlib/tests/execute_binary_tests/my_bin_with_args.sh)"
 
-args=()
-while (("$#")); do
-  case "${1}" in
-    "--binary")
-      binary="${2}"
-      shift 2
-      ;;
-    *)
-      args+=("${1}")
-      shift 1
-      ;;
-  esac
-done
-
-[[ -z "${binary:-}" ]] && exit_with_msg "A binary was not specified."
-
-if [[ ${#args[@]} > 0 ]]; then
-  "${binary}" "${args[@]}"
-else
-  "${binary}"
-fi
+output=$("${my_bin}")
+[[ "${output}" =~ "Args Count: 5" ]] || fail "Expected args count of 5."
+[[ "${output}" =~ "Args: --first second --third fourth fifth" ]]

@@ -1,15 +1,3 @@
-# def execute_binary(name, binary, args = []):
-#     native.sh_binary(
-#         name = name,
-#         srcs = ["@cgrindel_bazel_shlib//rules:execute_binary.sh"],
-#         data = [binary],
-#         args = ["--binary", "$(location " + binary + ")"] + args,
-#         deps = [
-#             "@cgrindel_bazel_shlib//lib:messages",
-#             "@bazel_tools//tools/bash/runfiles",
-#         ],
-#     )
-
 def _execute_binary_impl(ctx):
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
     bin_path = ctx.executable.binary.short_path
