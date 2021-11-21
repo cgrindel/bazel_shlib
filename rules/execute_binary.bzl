@@ -27,10 +27,6 @@ fi
     runfiles = ctx.runfiles()
     runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
 
-    # DEBUG BEGIN
-    print("*** CHUCK runfiles.files.to_list(): ", runfiles.files.to_list())
-    # DEBUG END
-
     return DefaultInfo(executable = out, runfiles = runfiles)
 
 execute_binary = rule(
