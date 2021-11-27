@@ -31,7 +31,11 @@ fail() {
 assert_equal() {
   local expected="${1}"
   local actual="${2}"
-  local err_msg="${3:-Expected to be equal. expected: ${expected}, actual: ${actual}}"
+  local err_msg_prefix="${3:-}"
+  local err_msg="Expected to be equal. expected: ${expected}, actual: ${actual}"
+  if [[ ! -z "${err_msg_prefix}" ]]; then
+    local err_msg="${err_msg_prefix} ${err_msg}"
+  fi
   [[ "${expected}" == "${actual}" ]] || fail "${err_msg}"
 }
 
