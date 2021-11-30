@@ -15,32 +15,15 @@ set -euo pipefail
 
 args=()
 """ + "\n".join([
-            # Do not quote the arg. The values are already quoted. Adding the
+            # Do not quote the {arg}. The values are already quoted. Adding the
             # quotes here will ruin the Bash substitution.
             """args+=( {arg} )""".format(arg = arg)
             for arg in ctx.attr.args
         ]) + """
-# DEBUG BEGIN
-echo >&2 "*** CHUCK execute_binary before args:"
-for (( i = 0; i < ${#args[@]}; i++ )); do
-  echo >&2 "*** CHUCK   ${i}: ${args[${i}]}"
-done
-# DEBUG END
 [[ $# > 0 ]] && args+=( "${@}" )
 if [[ ${#args[@]} > 0 ]]; then
 """ + """\
-  # DEBUG BEGIN
-  echo >&2 "*** CHUCK execute_binary after args:"
-  for (( i = 0; i < ${{#args[@]}}; i++ )); do
-    echo >&2 "*** CHUCK   ${{i}}: ${{args[${{i}}]}}"
-  done
-  set -x
-  # DEBUG END
   "{binary}" "${{args[@]}}"
-  # "{binary}" "\"${{args[@]}}\""
-  # "{binary}" "'${{args[@]}}'"
-  # "{binary}" "${{args[@]@Q}}"
-  # "{binary}" $(printf ' %q' "${{args[@]}}")
 else
   "{binary}"
 fi
