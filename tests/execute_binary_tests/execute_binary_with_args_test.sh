@@ -16,11 +16,12 @@ source "${assertions_lib}"
 
 my_bin="$(rlocation cgrindel_bazel_shlib/tests/execute_binary_tests/my_bin_with_args.sh)"
 
+# MARK - Test that embedded arguments are passed along properly.
+
 output=$("${my_bin}")
-[[ "${output}" =~ "Args Count: 5" ]] || fail "Expected args count of 5.
+[[ "${output}" =~ "Args Count: 6" ]] || fail "Expected args count of 6.
 ${output}
 "
-# [[ "${output}" =~ "Args: --first second --third fourth fifth" ]]
 [[ "${output}" =~ "  1: --first" ]] || fail "Expected --first
 ${output}
 "
@@ -34,5 +35,19 @@ ${output}
 ${output}
 "
 [[ "${output}" =~ "  5: not_a_flag" ]] || fail "Expected not_a_flag
+${output}
+"
+[[ "${output}" =~ "  6: quoted value with spaces" ]] || fail "Expected quoted value with spaces
+${output}
+"
+
+# MARK - Test that additional arguments are passed along properly
+
+output=$("${my_bin}" additional_arg)
+
+[[ "${output}" =~ "Args Count: 7" ]] || fail "Expected args count of 7.
+${output}
+"
+[[ "${output}" =~ "  7: additional_arg" ]] || fail "Expected additional_arg
 ${output}
 "

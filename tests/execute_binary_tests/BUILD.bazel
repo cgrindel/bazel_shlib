@@ -35,6 +35,7 @@ execute_binary(
         "--second",
         "second value has spaces",
         "not_a_flag",
+        "\"quoted value with spaces\"",
     ],
     binary = ":my_bin",
 )
