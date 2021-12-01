@@ -16,7 +16,7 @@ source "${assertions_lib}"
 
 my_bin="$(rlocation cgrindel_bazel_shlib/tests/execute_binary_tests/my_bin_with_args.sh)"
 
-# MARK - Functions
+# MARK - Additional Assertions
 
 assert_arg() {
   local output="${1}"
@@ -27,38 +27,23 @@ assert_arg() {
   "
 }
 
+assert_embedded_args() {
+  local output="${1}"
+  assert_arg "${output}" 1 "--first"
+  assert_arg "${output}" 2 "first_value"
+  assert_arg "${output}" 3 "--second"
+  assert_arg "${output}" 4 "second value has spaces"
+  assert_arg "${output}" 5 "not_a_flag"
+  assert_arg "${output}" 6 "quoted value with spaces"
+}
+
 # MARK - Test that embedded arguments are passed along properly.
 
 output=$("${my_bin}")
 [[ "${output}" =~ "Args Count: 6" ]] || fail "Expected args count of 6.
 ${output}
 "
-assert_arg "${output}" 1 "--first"
-assert_arg "${output}" 2 "first_value"
-assert_arg "${output}" 3 "--second"
-assert_arg "${output}" 4 "second value has spaces"
-assert_arg "${output}" 5 "not_a_flag"
-assert_arg "${output}" 6 "quoted value with spaces"
-
-
-# [[ "${output}" =~ "  1: --first" ]] || fail "Expected --first
-# ${output}
-# "
-# [[ "${output}" =~ "  2: first_value" ]] || fail "Expected first_value
-# ${output}
-# "
-# [[ "${output}" =~ "  3: --second" ]] || fail "Expected --second
-# ${output}
-# "
-# [[ "${output}" =~ "  4: second value has spaces" ]] || fail "Expected second value has spaces
-# ${output}
-# "
-# [[ "${output}" =~ "  5: not_a_flag" ]] || fail "Expected not_a_flag
-# ${output}
-# "
-# [[ "${output}" =~ "  6: quoted value with spaces" ]] || fail "Expected quoted value with spaces
-# ${output}
-# "
+assert_embedded_args "${output}"
 
 # MARK - Test that additional arguments are passed along properly
 
@@ -67,7 +52,5 @@ output=$("${my_bin}" additional_arg)
 [[ "${output}" =~ "Args Count: 7" ]] || fail "Expected args count of 7.
 ${output}
 "
+assert_embedded_args "${output}"
 assert_arg "${output}" 7 "additional_arg"
-# [[ "${output}" =~ "  7: additional_arg" ]] || fail "Expected additional_arg
-# ${output}
-# "
