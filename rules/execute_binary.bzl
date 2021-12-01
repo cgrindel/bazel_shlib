@@ -1,6 +1,15 @@
+# TODO: Add a test ensuring that args with spaces are passed through properly.
+
 def _execute_binary_impl(ctx):
     bin_path = ctx.executable.binary.short_path
     out = ctx.actions.declare_file(ctx.label.name + ".sh")
+    quoted_args = []
+    for arg in ctx.attr.args:
+        if arg.startswith("\"") and arg.endswith("\""):
+            quoted_args.append(arg)
+        else:
+            quoted_args.append("\"%s\"" % (arg))
+
     ctx.actions.write(
         output = out,
         is_executable = True,
@@ -18,7 +27,7 @@ args=()
             # Do not quote the {arg}. The values are already quoted. Adding the
             # quotes here will ruin the Bash substitution.
             """args+=( {arg} )""".format(arg = arg)
-            for arg in ctx.attr.args
+            for arg in quoted_args
         ]) + """
 [[ $# > 0 ]] && args+=( "${@}" )
 if [[ ${#args[@]} > 0 ]]; then

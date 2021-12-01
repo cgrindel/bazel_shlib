@@ -8,7 +8,7 @@ sh_binary(
     srcs = ["my_bin.sh"],
 )
 
-# MARK: - Test No Args
+# MARK: - Test no args
 
 execute_binary(
     name = "my_bin_no_args",
@@ -25,16 +25,16 @@ sh_test(
     ],
 )
 
-# MARK: - Test with Args
+# MARK: - Test with args
 
 execute_binary(
     name = "my_bin_with_args",
     args = [
         "--first",
-        "second",
-        "--third",
-        "fourth",
-        "fifth",
+        "first_value",
+        "--second",
+        "second value has spaces",
+        "not_a_flag",
     ],
     binary = ":my_bin",
 )

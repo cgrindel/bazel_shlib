@@ -17,5 +17,22 @@ source "${assertions_lib}"
 my_bin="$(rlocation cgrindel_bazel_shlib/tests/execute_binary_tests/my_bin_with_args.sh)"
 
 output=$("${my_bin}")
-[[ "${output}" =~ "Args Count: 5" ]] || fail "Expected args count of 5."
-[[ "${output}" =~ "Args: --first second --third fourth fifth" ]]
+[[ "${output}" =~ "Args Count: 5" ]] || fail "Expected args count of 5.
+${output}
+"
+# [[ "${output}" =~ "Args: --first second --third fourth fifth" ]]
+[[ "${output}" =~ "  1: --first" ]] || fail "Expected --first
+${output}
+"
+[[ "${output}" =~ "  2: first_value" ]] || fail "Expected first_value
+${output}
+"
+[[ "${output}" =~ "  3: --second" ]] || fail "Expected --second
+${output}
+"
+[[ "${output}" =~ "  4: second value has spaces" ]] || fail "Expected second value has spaces
+${output}
+"
+[[ "${output}" =~ "  5: not_a_flag" ]] || fail "Expected not_a_flag
+${output}
+"
