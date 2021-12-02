@@ -15,9 +15,9 @@ Add the following to your `WORKSPACE` file.
 ```python
 http_archive(
     name = "cgrindel_bazel_shlib",
-    sha256 = "d2f0a8dd3180463f00451449ad1f0bedfebb3d2bccc8178634ef5ad07ab55dac",
-    strip_prefix = "bazel_shlib-0.2.0",
-    urls = ["https://github.com/cgrindel/bazel_shlib/archive/v0.2.0.tar.gz"],
+    sha256 = "39c250852fb455e5de18f836c0c339075d6e52ea5ec52a76d62ef9e2eed56337",
+    strip_prefix = "bazel_shlib-0.2.1",
+    urls = ["https://github.com/cgrindel/bazel_shlib/archive/v0.2.1.tar.gz"],
 )
 
 load("@cgrindel_bazel_shlib//:deps.bzl", "shlib_rules_dependencies")
