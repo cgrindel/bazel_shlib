@@ -1,5 +1,8 @@
 # Shlib 
 
+__NOTE: The functionality for this repository has moved to [cgrindel/bazel-starlib](https://github.com/cgrindel/bazel-starlib).__
+
+
 Shlib is a library of Bash shell functions that are useful when implementing shell binaries, libraries, and tests.
 
 
